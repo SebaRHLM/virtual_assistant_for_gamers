@@ -5,10 +5,10 @@
     </ion-title>
     
     <div slot="end" class="header-buttons">
-      <ion-button fill="clear" color="medium">
-        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
-        FAQ
-      </ion-button>
+      <ion-button fill="clear" color="medium" (click)="goToF4Q()">
+          <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+          FAQ
+        </ion-button>
       
       <ion-button fill="clear" color="medium" class="active-button">
         <ion-icon name="person-outline" slot="start"></ion-icon>
@@ -53,8 +53,13 @@
         </div>
         
         <div class="info-item">
-          <label class="info-label">Teléfono</label>
-          <p class="info-value">+56 9 1234 5678</p>
+          <label class="info-label">Region</label>
+          <p class="info-value"> {{currentUser.region}}</p>
+        </div>
+
+        <div class="info-item">
+          <label class="info-label">Comuna</label>
+          <p class="info-value"> {{currentUser.comuna}}</p>
         </div>
       </div>
       

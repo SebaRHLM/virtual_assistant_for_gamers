@@ -19,13 +19,13 @@ export class SinginPage implements OnInit {
 
   // Datos de comunas por región (simplificado para el ejemplo)
   comunasByRegion: { [key: string]: Array<{name: string, value: string}> } = {
-    arica: [
+    Arica: [
       { name: 'Arica', value: 'arica' },
       { name: 'Camarones', value: 'camarones' },
       { name: 'Putre', value: 'putre' },
       { name: 'General Lagos', value: 'general_lagos' }
     ],
-    tarapaca: [
+    Tarapaca: [
       { name: 'Alto Hospicio', value: 'alto_hospicio' },
       { name: 'Camiña', value: 'camiña' },
       { name: 'Colchane', value: 'colchane' },
@@ -34,7 +34,7 @@ export class SinginPage implements OnInit {
       { name: 'Pica', value: 'pica' },
       { name: 'Pozo Almonte', value: 'pozo_almonte' }
     ],
-    antofagasta: [
+    Antofagasta: [
       { name: 'Antofagasta', value: 'antofagasta' },
       { name: 'Mejillones', value: 'mejillones' },
       { name: 'Sierra Gorda', value: 'sierra_gorda' },
@@ -45,7 +45,7 @@ export class SinginPage implements OnInit {
       { name: 'Tocopilla', value: 'tocopilla' },
       { name: 'Ollagüe', value: 'ollague' }
     ],
-    atacama: [
+    Atacama: [
       { name: 'Alto del Carmen', value: 'alto_del_carmen' },
       { name: 'Caldera', value: 'caldera' },
       { name: 'Chañaral', value: 'chanaral' },
@@ -56,7 +56,7 @@ export class SinginPage implements OnInit {
       { name: 'Tierra Amarilla', value: 'tierra_amarilla' },
       { name: 'Vallenar', value: 'vallenar' }
     ],
-    coquimbo: [
+    Coquimbo: [
       { name: 'Andacollo', value: 'andacollo' },
       { name: 'Canela', value: 'canela' },
       { name: 'Combarbalá', value: 'combarbala' }, 
@@ -73,28 +73,28 @@ export class SinginPage implements OnInit {
       { name: 'Salamanca', value: 'salamanca' },
       { name: 'Vicuña', value: 'vicuna' }
     ],
-    valparaiso: [
+    Valparaiso: [
       { name: 'Viña del Mar', value: 'vina' },
       { name: 'Valparaíso', value: 'valparaiso' },
       { name: 'Quilpué', value: 'quilpue' },
       { name: 'Villa Alemana', value: 'villa_alemana' },
       { name: 'Casablanca', value: 'casablanca' }
     ],
-    metropolitana: [
+    Metropolitana: [
       { name: 'Santiago', value: 'santiago' },
       { name: 'Las Condes', value: 'las_condes' },
       { name: 'Providencia', value: 'providencia' },
       { name: 'Ñuñoa', value: 'nunoa' },
       { name: 'Maipú', value: 'maipu' }
     ],
-    ohiggins: [
+    Ohiggins: [
       { name: 'Rancagua', value: 'rancagua' },
       { name: 'San Fernando', value: 'san_fernando' },
       { name: 'Rengo', value: 'rengo' },
       { name: 'Machalí', value: 'machali' },
       { name: 'Pichilemu', value: 'pichilemu' }
     ],
-    maule: [
+    Maule: [
       { name: 'Talca', value: 'talca' },
       { name: 'Curicó', value: 'curico' },         
       { name: 'Linares', value: 'linares' },
@@ -104,7 +104,7 @@ export class SinginPage implements OnInit {
       { name: 'Molina', value: 'molina' },
       { name: 'San Javier', value: 'san_javier' }
     ],
-    nuble: [
+    Nuble: [
       { name: 'Chillán', value: 'chillan' },                
       { name: 'Chillán Viejo', value: 'chillan_viejo' },     
       { name: 'San Carlos', value: 'san_carlos' },
@@ -116,7 +116,7 @@ export class SinginPage implements OnInit {
       { name: 'El Carmen', value: 'el_carmen' },
       { name: 'Ninhue', value: 'ninhue' }
     ],
-    biobio: [
+    Biobio: [
       { name: 'Concepción', value: 'concepcion' },         
       { name: 'Talcahuano', value: 'talcahuano' },
       { name: 'San Pedro de la Paz', value: 'san_pedro_de_la_paz' },
@@ -128,7 +128,7 @@ export class SinginPage implements OnInit {
       { name: 'Cañete', value: 'canete' },                  
       { name: 'Lebu', value: 'lebu' }
     ],
-    araucania: [
+    Araucania: [
       { name: 'Temuco', value: 'temuco' },
       { name: 'Padre Las Casas', value: 'padre_las_casas' },
       { name: 'Villarrica', value: 'villarrica' },
@@ -140,7 +140,7 @@ export class SinginPage implements OnInit {
       { name: 'Curacautín', value: 'curacautin' },  
       { name: 'Victoria', value: 'victoria' }
     ],
-    rios: [
+    Rios: [
       { name: 'Valdivia', value: 'valdivia' },
       { name: 'La Unión', value: 'la_union' },
       { name: 'Panguipulli', value: 'panguipulli' },
@@ -152,7 +152,7 @@ export class SinginPage implements OnInit {
       { name: 'Máfil', value: 'mafil' },            
       { name: 'Corral', value: 'corral' }
     ],
-    lagos: [
+    Lagos: [
       { name: 'Puerto Montt', value: 'puerto_montt' },
       { name: 'Osorno', value: 'osorno' },
       { name: 'Castro', value: 'castro' },
@@ -164,7 +164,7 @@ export class SinginPage implements OnInit {
       { name: 'Llanquihue', value: 'llanquihue' },
       { name: 'Frutillar', value: 'frutillar' }
     ],
-    aysen: [
+    Aysen: [
       { name: 'Coyhaique', value: 'coyhaique' },
       { name: 'Puerto Aysén', value: 'puerto_aysen' },
       { name: 'Chile Chico', value: 'chile_chico' },
@@ -176,7 +176,7 @@ export class SinginPage implements OnInit {
       { name: 'O’Higgins', value: 'ohiggins' },           
       { name: 'Tortel', value: 'tortel' }
     ],
-    magallanes: [
+    Magallanes: [
       { name: 'Punta Arenas', value: 'punta_arenas' },
       { name: 'Puerto Natales', value: 'puerto_natales' },
       { name: 'Porvenir', value: 'porvenir' },

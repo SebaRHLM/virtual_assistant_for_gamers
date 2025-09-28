@@ -106,4 +106,7 @@ export class PerfilPage implements OnInit {
       }
     }
   }
+  goToF4Q() {
+    this.router.navigate(['/preguntas-frecuentes']);
+  }
 }
