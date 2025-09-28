@@ -1,0 +1,717 @@
+.home-content {
+  --background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  padding: 0;
+  margin: 0;
+}
+
+// Header Section
+.header-section {
+  padding: px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.auth-buttons {
+  ion-button {
+    --color: #007bff;
+    font-weight: 500;
+  }
+}
+
+// Hero Section - New Design
+/* home.page.scss - Actualizado con dispositivos */
+.home-content {
+  --background: linear-gradient(135deg, #0C0C0C 0%, #1E1E1E 50%, #0C0C0C 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+.background-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.gradient-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+}
+
+.circle-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #0066CC, #00CCFF);
+  top: 10%;
+  left: 10%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.circle-2 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, #0066CC, #6600CC);
+  top: 60%;
+  right: 10%;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+.circle-3 {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(45deg, #6600CC, #0066CC);
+  bottom: 20%;
+  left: 20%;
+  animation: float 10s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.brand-section {
+  margin-bottom: 40px;
+}
+
+.zero-logo {
+  margin: 0 auto 16px;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #0066CC, #00CCFF);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 102, 204, 0.3);
+}
+
+.logo-text {
+  font-size: 32px;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+}
+
+.brand-name {
+  font-size: 48px;
+  font-weight: 300;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: 2px;
+  font-family: 'Inter', sans-serif;
+}
+
+.tagline-section {
+  margin-bottom: 40px;
+}
+
+.main-tagline {
+  font-size: 18px;
+  color: #CCCCCC;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.cta-section {
+  margin-bottom: 60px;
+}
+
+.cta-button {
+  --background: linear-gradient(135deg, #0066CC, #00CCFF);
+  --background-activated: linear-gradient(135deg, #0052A3, #0099CC);
+  --background-hover: linear-gradient(135deg, #0052A3, #0099CC);
+  --border-radius: 16px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  --box-shadow: 0 8px 32px rgba(0, 102, 204, 0.4);
+  
+  height: 56px;
+  font-weight: 600;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.button-text {
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* Devices Section */
+.devices-section {
+  position: relative;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 100px;
+}
+
+/* Laptop Styles */
+.device-mockup.laptop {
+  position: relative;
+  z-index: 3;
+  animation: device-float 6s ease-in-out infinite;
+}
+
+.laptop-frame {
+  width: 400px;
+  height: 250px;
+  background: #2D2D2D;
+  border-radius: 12px 12px 0 0;
+  border: 2px solid #404040;
+  border-bottom: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.laptop-screen {
+  width: 100%;
+  height: 100%;
+  background: #1E1E1E;
+  border-radius: 8px;
+  margin: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.laptop-base {
+  width: 460px;
+  height: 20px;
+  background: linear-gradient(to bottom, #2D2D2D, #1A1A1A);
+  border-radius: 0 0 8px 8px;
+  border: 2px solid #404040;
+  border-top: none;
+  margin-top: -2px;
+}
+
+.laptop-base::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
+}
+
+/* Phone Styles */
+.device-mockup.phone {
+  position: relative;
+  z-index: 3;
+  animation: device-float 6s ease-in-out infinite 2s;
+}
+
+.phone-frame {
+  width: 200px;
+  height: 400px;
+  background: #2D2D2D;
+  border-radius: 30px;
+  border: 3px solid #404040;
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 20px;
+  background: #2D2D2D;
+  border-radius: 0 0 10px 10px;
+  z-index: 2;
+}
+
+.phone-screen {
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: #1E1E1E;
+  border-radius: 25px;
+  margin: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Device Chat Interfaces */
+.device-chat-interface,
+.mobile-chat-interface {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #1E1E1E;
+}
+
+/* Laptop Chat */
+.device-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.device-avatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #0066CC, #00CCFF);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 12px;
+}
+
+.device-chat-title {
+  color: #FFFFFF;
+  font-size: 14px;
+}
+
+.device-chat-messages {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.device-message-bubble {
+  background: rgba(0, 102, 204, 0.2);
+  border: 1px solid rgba(0, 102, 204, 0.3);
+  border-radius: 16px;
+  padding: 12px 16px;
+  max-width: 80%;
+  align-self: flex-start;
+  
+  p {
+    margin: 0;
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+.device-typing-indicator {
+  padding: 0 16px;
+}
+
+.device-typing-dots {
+  display: flex;
+  gap: 4px;
+  
+  span {
+    width: 6px;
+    height: 6px;
+    background: #0066CC;
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+    
+    &:nth-child(1) { animation-delay: -0.32s; }
+    &:nth-child(2) { animation-delay: -0.16s; }
+    &:nth-child(3) { animation-delay: 0s; }
+  }
+}
+
+/* Mobile Chat */
+.mobile-chat-interface {
+  .mobile-chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobile-avatar {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #0066CC, #00CCFF);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 10px;
+  }
+  
+  .mobile-title {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .mobile-chat-messages {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .mobile-message-bubble {
+    background: rgba(0, 102, 204, 0.2);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    border-radius: 16px;
+    padding: 10px 14px;
+    max-width: 85%;
+    
+    p {
+      margin: 0;
+      color: #FFFFFF;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+  }
+  
+  .mobile-typing-indicator {
+    padding: 0 14px;
+  }
+  
+  .mobile-typing-dots {
+    display: flex;
+    gap: 3px;
+    
+    span {
+      width: 5px;
+      height: 5px;
+      background: #0066CC;
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+      
+      &:nth-child(1) { animation-delay: -0.32s; }
+      &:nth-child(2) { animation-delay: -0.16s; }
+      &:nth-child(3) { animation-delay: 0s; }
+    }
+  }
+  
+  .mobile-input-area {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobile-input {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 12px 16px;
+    
+    span {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+}
+
+@keyframes device-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .devices-section {
+    flex-direction: column;
+    height: auto;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .laptop-frame {
+    width: 300px;
+    height: 188px;
+  }
+  
+  .laptop-base {
+    width: 340px;
+  }
+  
+  .phone-frame {
+    width: 150px;
+    height: 300px;
+  }
+  
+  .brand-name {
+    font-size: 36px;
+  }
+  
+  .main-tagline {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-container {
+    padding: 16px;
+  }
+  
+  .brand-name {
+    font-size: 32px;
+  }
+  
+  .laptop-frame {
+    width: 250px;
+    height: 156px;
+  }
+  
+  .laptop-base {
+    width: 280px;
+  }
+  
+  .phone-frame {
+    width: 120px;
+    height: 240px;
+  }
+  
+  .devices-section {
+    gap: 30px;
+  }
+}
+
+// How It Works Section
+.how-it-works-section {
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+  color: white;
+}
+
+.how-it-works-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  
+  .highlight {
+    color: #007bff;
+  }
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.features-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-icon {
+  ion-icon {
+    font-size: 2rem;
+  }
+}
+
+.feature-content {
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+.bottom-visual {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.device-mockup-small {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.7;
+}
+
+.laptop-small {
+  width: 150px;
+  height: 100px;
+  background: #333;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.screen-small {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 3px;
+  padding: 8px;
+}
+
+.chat-interface-small {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header-small {
+  margin-bottom: 8px;
+}
+
+.zero-logo-small {
+  width: 15px;
+  height: 15px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+.chat-message-small {
+  background: #2d2d2d;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 0.5rem;
+  
+  p {
+    margin: 0 0 3px 0;
+  }
+}
+
+.typing-indicator-small {
+  span {
+    width: 2px;
+    height: 2px;
+    background: #007bff;
+    border-radius: 50%;
+    animation: typing 1.5s infinite;
+  }
+}
+
+.phone-small {
+  width: 60px;
+  height: 100px;
+  background: #222;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.phone-screen-small {
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-area-small {
+  text-align: center;
+  color: #666;
+  font-size: 0.4rem;
+  margin-bottom: 5px;
+  
+  p {
+    margin: 0 0 2px 0;
+  }
+  
+  ion-icon {
+    font-size: 0.6rem;
+  }
+}
+
+.color-blocks-small {
+  display: flex;
+  gap: 2px;
+  
+  .color-block {
+    width: 8px;
+    height: 6px;
+  }
+}
