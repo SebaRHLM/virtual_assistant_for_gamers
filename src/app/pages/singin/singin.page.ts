@@ -19,6 +19,60 @@ export class SinginPage implements OnInit {
 
   // Datos de comunas por región (simplificado para el ejemplo)
   comunasByRegion: { [key: string]: Array<{name: string, value: string}> } = {
+    arica: [
+      { name: 'Arica', value: 'arica' },
+      { name: 'Camarones', value: 'camarones' },
+      { name: 'Putre', value: 'putre' },
+      { name: 'General Lagos', value: 'general_lagos' }
+    ],
+    tarapaca: [
+      { name: 'Alto Hospicio', value: 'alto_hospicio' },
+      { name: 'Camiña', value: 'camiña' },
+      { name: 'Colchane', value: 'colchane' },
+      { name: 'Huara', value: 'huara' },
+      { name: 'Iquique', value: 'iquique' },
+      { name: 'Pica', value: 'pica' },
+      { name: 'Pozo Almonte', value: 'pozo_almonte' }
+    ],
+    antofagasta: [
+      { name: 'Antofagasta', value: 'antofagasta' },
+      { name: 'Mejillones', value: 'mejillones' },
+      { name: 'Sierra Gorda', value: 'sierra_gorda' },
+      { name: 'Taltal', value: 'taltal' },
+      { name: 'Calama', value: 'calama' },
+      { name: 'María Elena', value: 'maria_elena' },
+      { name: 'San Pedro de Atacama', value: 'san_pedro_de_atacama' },
+      { name: 'Tocopilla', value: 'tocopilla' },
+      { name: 'Ollagüe', value: 'ollague' }
+    ],
+    atacama: [
+      { name: 'Alto del Carmen', value: 'alto_del_carmen' },
+      { name: 'Caldera', value: 'caldera' },
+      { name: 'Chañaral', value: 'chanaral' },
+      { name: 'Copiapó', value: 'copiapo' },    
+      { name: 'Diego de Almagro', value: 'diego_de_almagro' },
+      { name: 'Freirina', value: 'freirina' },
+      { name: 'Huasco', value: 'huasco' },
+      { name: 'Tierra Amarilla', value: 'tierra_amarilla' },
+      { name: 'Vallenar', value: 'vallenar' }
+    ],
+    coquimbo: [
+      { name: 'Andacollo', value: 'andacollo' },
+      { name: 'Canela', value: 'canela' },
+      { name: 'Combarbalá', value: 'combarbala' }, 
+      { name: 'Coquimbo', value: 'coquimbo' },
+      { name: 'Illapel', value: 'illapel' },
+      { name: 'La Higuera', value: 'la_higuera' },
+      { name: 'La Serena', value: 'la_serena' },
+      { name: 'Los Vilos', value: 'los_vilos' },
+      { name: 'Monte Patria', value: 'monte_patria' },
+      { name: 'Ovalle', value: 'ovalle' },
+      { name: 'Paihuano', value: 'paihuano' },
+      { name: 'Punitaqui', value: 'punitaqui' },
+      { name: 'Río Hurtado', value: 'rio_hurtado' }, 
+      { name: 'Salamanca', value: 'salamanca' },
+      { name: 'Vicuña', value: 'vicuna' }
+    ],
     valparaiso: [
       { name: 'Viña del Mar', value: 'vina' },
       { name: 'Valparaíso', value: 'valparaiso' },
@@ -33,7 +87,105 @@ export class SinginPage implements OnInit {
       { name: 'Ñuñoa', value: 'nunoa' },
       { name: 'Maipú', value: 'maipu' }
     ],
-    // Agregar más regiones según necesidad
+    ohiggins: [
+      { name: 'Rancagua', value: 'rancagua' },
+      { name: 'San Fernando', value: 'san_fernando' },
+      { name: 'Rengo', value: 'rengo' },
+      { name: 'Machalí', value: 'machali' },
+      { name: 'Pichilemu', value: 'pichilemu' }
+    ],
+    maule: [
+      { name: 'Talca', value: 'talca' },
+      { name: 'Curicó', value: 'curico' },         
+      { name: 'Linares', value: 'linares' },
+      { name: 'Constitución', value: 'constitucion' }, 
+      { name: 'Parral', value: 'parral' },
+      { name: 'Cauquenes', value: 'cauquenes' },
+      { name: 'Molina', value: 'molina' },
+      { name: 'San Javier', value: 'san_javier' }
+    ],
+    nuble: [
+      { name: 'Chillán', value: 'chillan' },                
+      { name: 'Chillán Viejo', value: 'chillan_viejo' },     
+      { name: 'San Carlos', value: 'san_carlos' },
+      { name: 'Bulnes', value: 'bulnes' },
+      { name: 'Quirihue', value: 'quirihue' },
+      { name: 'Coihueco', value: 'coihueco' },
+      { name: 'Yungay', value: 'yungay' },
+      { name: 'San Nicolás', value: 'san_nicolas' },          
+      { name: 'El Carmen', value: 'el_carmen' },
+      { name: 'Ninhue', value: 'ninhue' }
+    ],
+    biobio: [
+      { name: 'Concepción', value: 'concepcion' },         
+      { name: 'Talcahuano', value: 'talcahuano' },
+      { name: 'San Pedro de la Paz', value: 'san_pedro_de_la_paz' },
+      { name: 'Hualpén', value: 'hualpen' },                 
+      { name: 'Coronel', value: 'coronel' },
+      { name: 'Lota', value: 'lota' },
+      { name: 'Chiguayante', value: 'chiguayante' },
+      { name: 'Los Ángeles', value: 'los_angeles' },         
+      { name: 'Cañete', value: 'canete' },                  
+      { name: 'Lebu', value: 'lebu' }
+    ],
+    araucania: [
+      { name: 'Temuco', value: 'temuco' },
+      { name: 'Padre Las Casas', value: 'padre_las_casas' },
+      { name: 'Villarrica', value: 'villarrica' },
+      { name: 'Angol', value: 'angol' },
+      { name: 'Lautaro', value: 'lautaro' },
+      { name: 'Nueva Imperial', value: 'nueva_imperial' },
+      { name: 'Pucón', value: 'pucon' },          
+      { name: 'Collipulli', value: 'collipulli' },
+      { name: 'Curacautín', value: 'curacautin' },  
+      { name: 'Victoria', value: 'victoria' }
+    ],
+    rios: [
+      { name: 'Valdivia', value: 'valdivia' },
+      { name: 'La Unión', value: 'la_union' },
+      { name: 'Panguipulli', value: 'panguipulli' },
+      { name: 'Río Bueno', value: 'rio_bueno' },     
+      { name: 'Lanco', value: 'lanco' },
+      { name: 'Paillaco', value: 'paillaco' },
+      { name: 'Futrono', value: 'futrono' },
+      { name: 'Lago Ranco', value: 'lago_ranco' },
+      { name: 'Máfil', value: 'mafil' },            
+      { name: 'Corral', value: 'corral' }
+    ],
+    lagos: [
+      { name: 'Puerto Montt', value: 'puerto_montt' },
+      { name: 'Osorno', value: 'osorno' },
+      { name: 'Castro', value: 'castro' },
+      { name: 'Ancud', value: 'ancud' },
+      { name: 'Puerto Varas', value: 'puerto_varas' },
+      { name: 'Quellón', value: 'quellon' },   
+      { name: 'Purranque', value: 'purranque' },
+      { name: 'Calbuco', value: 'calbuco' },
+      { name: 'Llanquihue', value: 'llanquihue' },
+      { name: 'Frutillar', value: 'frutillar' }
+    ],
+    aysen: [
+      { name: 'Coyhaique', value: 'coyhaique' },
+      { name: 'Puerto Aysén', value: 'puerto_aysen' },
+      { name: 'Chile Chico', value: 'chile_chico' },
+      { name: 'Cochrane', value: 'cochrane' },
+      { name: 'Puerto Cisnes', value: 'puerto_cisnes' },
+      { name: 'Lago Verde', value: 'lago_verde' },
+      { name: 'Río Ibáñez', value: 'rio_ibanez' },        
+      { name: 'Guaitecas', value: 'guaitecas' },
+      { name: 'O’Higgins', value: 'ohiggins' },           
+      { name: 'Tortel', value: 'tortel' }
+    ],
+    magallanes: [
+      { name: 'Punta Arenas', value: 'punta_arenas' },
+      { name: 'Puerto Natales', value: 'puerto_natales' },
+      { name: 'Porvenir', value: 'porvenir' },
+      { name: 'Puerto Williams', value: 'puerto_williams' },
+      { name: 'San Gregorio', value: 'san_gregorio' },
+      { name: 'Primavera', value: 'primavera' },
+      { name: 'Timaukel', value: 'timaukel' },
+      { name: 'Torres del Paine', value: 'torres_del_paine' }
+    ]
   };
 
   constructor(
@@ -230,5 +382,11 @@ export class SinginPage implements OnInit {
       cssClass: 'error-alert'
     });
     await alert.present();
+  }
+  /** 
+  * Ir a Terminos y condicioes
+  */
+  goTotyc(){
+    this.router.navigate(['/tyc']);
   }
 }

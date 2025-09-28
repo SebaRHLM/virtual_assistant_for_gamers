@@ -257,7 +257,7 @@ export class ChatService {
       const compatibility = this.checkCompatibility(component1, component2);
       
       const responseContent = `
-<h4>Compatibilidad entre ${component1} y ${component2}</h4>
+Compatibilidad entre ${component1} y ${component2}
 
 ${compatibility.compatible ? '✅ Sí son compatibles!' : '❌ No son completamente compatibles'}
 
@@ -295,7 +295,7 @@ ${compatibility.compatible ?
       const [component1, component2] = components;
       
       const responseContent = `
-<h4>Comparación entre ${component1} vs ${component2}</h4>
+Comparación entre ${component1} vs ${component2}
 
 <strong>${component1}:</strong>
 • VRAM: 12GB GDDR6X
@@ -334,7 +334,7 @@ ${component1} es mejor para gaming en 1440p y resoluciones altas, mientras que $
    */
   private async generateInfoResponse(query: string): Promise<Message> {
     const responseContent = `
-<h4>Información sobre componentes PC</h4>
+Información sobre componentes PC
 
 Te puedo ayudar con información sobre:
 

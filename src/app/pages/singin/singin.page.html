@@ -14,7 +14,7 @@
       <div class="form-container">
         <!-- Header with back button -->
         <div class="form-header">
-          <ion-button fill="clear" color="dark" (click)="goBack()">
+          <ion-button fill="clear" color="black" (click)="goBack()">
             <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
           </ion-button>
           <h2 class="form-title">Crear nueva cuenta</h2>
@@ -186,8 +186,7 @@
                 slot="start">
               </ion-checkbox>
               <ion-label class="terms-label">
-                Acepto los <a href="#" class="terms-link">Términos y Condiciones</a> así como 
-                la <a href="#" class="terms-link">Política de Privacidad</a>
+                Acepto los <a (click)="goTotyc()" class="terms-link">Términos y Condiciones</a> para el utilizar ZERO.AI<a href="#" class="terms-link"></a>
               </ion-label>
             </ion-item>
             <div class="error-message" *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched">

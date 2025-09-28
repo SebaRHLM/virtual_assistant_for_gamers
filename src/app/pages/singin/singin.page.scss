@@ -1,6 +1,6 @@
 .register-content {
   --background: #fafafa;
-  --color: #333;
+  --color: #000;
   --placeholder-color: #999;
   
   
@@ -46,7 +46,15 @@
     --color-checked: #007bff;
     --border-color: #ccc;
     --border-color-checked: #007bff;
+    --background: #fff;
+    --background-checked: #fff;
+    --checkmark-color: #007bff;
     margin-right: 12px;
+  }
+
+  ion-checkbox::part(container) {
+    background: #fff;
+    border-color: #ccc;
   }
 }
 
@@ -209,6 +217,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  
 }
 
 .form-label {
@@ -225,4 +234,22 @@
   --background: #f5f5f5;
   padding: 0;
   margin: 0;
+}
+.ion-select{
+  --color: #000;
+  &::part(placeholder),
+    &::part(text) {
+      color: #000 !important;
+    }
+}
+
+.form-item{
+  ion-select {
+    --color: #000;
+      
+    &::part(placeholder),
+    &::part(text) {
+      color: #000;
+    }
+  }
 }
