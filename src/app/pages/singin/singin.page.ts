@@ -323,7 +323,7 @@ export class SinginPage implements OnInit {
       next: async (response) => {
         console.log('✅ Respuesta del servidor:', response);
         await this.showSuccessAlert();
-        this.router.navigate(['/chat'], { replaceUrl: true });
+        this.router.navigate(['/login'], { replaceUrl: true });
       },
       error: async (err) => {
         console.error('❌ Error al registrar:', err);
@@ -360,7 +360,7 @@ export class SinginPage implements OnInit {
   private async showSuccessAlert() {
     const alert = await this.alertController.create({
       header: '¡Cuenta creada!',
-      message: 'Tu cuenta ha sido creada exitosamente. ¡Bienvenido a ZERO.AI!',
+      message: 'Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión en ZERO.AI.',
       buttons: ['OK'],
       cssClass: 'success-alert'
     });

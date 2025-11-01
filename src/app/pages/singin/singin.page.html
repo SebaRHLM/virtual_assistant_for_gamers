@@ -199,7 +199,6 @@
             expand="block"
             type="submit"
             class="submit-button"
-            (click)="goBack()"
             [disabled]="registerForm.invalid || isLoading">
             <ion-spinner name="circular" *ngIf="isLoading"></ion-spinner>
             {{ isLoading ? 'Creando cuenta...' : 'Sign Up' }}

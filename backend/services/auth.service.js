@@ -11,7 +11,7 @@ export class AuthService {
     if (existing) throw new Error("El usuario ya existe");
 
     // Encriptar contraseña
-    const password_hash = await bcrypt.hash(password, process.env.COD_ROUNDS);
+    const password_hash = await bcrypt.hash(password, Number(process.env.COD_ROUNDS));
 
     const newUser = await UserRepository.create({
       rut,
