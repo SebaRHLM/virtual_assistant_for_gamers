@@ -19,13 +19,13 @@ export class SinginPage implements OnInit {
 
   // Datos de comunas por región (simplificado para el ejemplo)
   comunasByRegion: { [key: string]: Array<{name: string, value: string}> } = {
-    Arica: [
+    arica: [
       { name: 'Arica', value: 'arica' },
       { name: 'Camarones', value: 'camarones' },
       { name: 'Putre', value: 'putre' },
       { name: 'General Lagos', value: 'general_lagos' }
     ],
-    Tarapaca: [
+    tarapaca: [
       { name: 'Alto Hospicio', value: 'alto_hospicio' },
       { name: 'Camiña', value: 'camiña' },
       { name: 'Colchane', value: 'colchane' },
@@ -34,7 +34,7 @@ export class SinginPage implements OnInit {
       { name: 'Pica', value: 'pica' },
       { name: 'Pozo Almonte', value: 'pozo_almonte' }
     ],
-    Antofagasta: [
+    antofagasta: [
       { name: 'Antofagasta', value: 'antofagasta' },
       { name: 'Mejillones', value: 'mejillones' },
       { name: 'Sierra Gorda', value: 'sierra_gorda' },
@@ -45,7 +45,7 @@ export class SinginPage implements OnInit {
       { name: 'Tocopilla', value: 'tocopilla' },
       { name: 'Ollagüe', value: 'ollague' }
     ],
-    Atacama: [
+    atacama: [
       { name: 'Alto del Carmen', value: 'alto_del_carmen' },
       { name: 'Caldera', value: 'caldera' },
       { name: 'Chañaral', value: 'chanaral' },
@@ -56,7 +56,7 @@ export class SinginPage implements OnInit {
       { name: 'Tierra Amarilla', value: 'tierra_amarilla' },
       { name: 'Vallenar', value: 'vallenar' }
     ],
-    Coquimbo: [
+    coquimbo: [
       { name: 'Andacollo', value: 'andacollo' },
       { name: 'Canela', value: 'canela' },
       { name: 'Combarbalá', value: 'combarbala' }, 
@@ -73,28 +73,28 @@ export class SinginPage implements OnInit {
       { name: 'Salamanca', value: 'salamanca' },
       { name: 'Vicuña', value: 'vicuna' }
     ],
-    Valparaiso: [
+    valparaiso: [
       { name: 'Viña del Mar', value: 'vina' },
       { name: 'Valparaíso', value: 'valparaiso' },
       { name: 'Quilpué', value: 'quilpue' },
       { name: 'Villa Alemana', value: 'villa_alemana' },
       { name: 'Casablanca', value: 'casablanca' }
     ],
-    Metropolitana: [
+    metropolitana: [
       { name: 'Santiago', value: 'santiago' },
       { name: 'Las Condes', value: 'las_condes' },
       { name: 'Providencia', value: 'providencia' },
       { name: 'Ñuñoa', value: 'nunoa' },
       { name: 'Maipú', value: 'maipu' }
     ],
-    Ohiggins: [
+    ohiggins: [
       { name: 'Rancagua', value: 'rancagua' },
       { name: 'San Fernando', value: 'san_fernando' },
       { name: 'Rengo', value: 'rengo' },
       { name: 'Machalí', value: 'machali' },
       { name: 'Pichilemu', value: 'pichilemu' }
     ],
-    Maule: [
+    maule: [
       { name: 'Talca', value: 'talca' },
       { name: 'Curicó', value: 'curico' },         
       { name: 'Linares', value: 'linares' },
@@ -104,7 +104,7 @@ export class SinginPage implements OnInit {
       { name: 'Molina', value: 'molina' },
       { name: 'San Javier', value: 'san_javier' }
     ],
-    Nuble: [
+    nuble: [
       { name: 'Chillán', value: 'chillan' },                
       { name: 'Chillán Viejo', value: 'chillan_viejo' },     
       { name: 'San Carlos', value: 'san_carlos' },
@@ -116,7 +116,7 @@ export class SinginPage implements OnInit {
       { name: 'El Carmen', value: 'el_carmen' },
       { name: 'Ninhue', value: 'ninhue' }
     ],
-    Biobio: [
+    biobio: [
       { name: 'Concepción', value: 'concepcion' },         
       { name: 'Talcahuano', value: 'talcahuano' },
       { name: 'San Pedro de la Paz', value: 'san_pedro_de_la_paz' },
@@ -128,7 +128,7 @@ export class SinginPage implements OnInit {
       { name: 'Cañete', value: 'canete' },                  
       { name: 'Lebu', value: 'lebu' }
     ],
-    Araucania: [
+    araucania: [
       { name: 'Temuco', value: 'temuco' },
       { name: 'Padre Las Casas', value: 'padre_las_casas' },
       { name: 'Villarrica', value: 'villarrica' },
@@ -140,7 +140,7 @@ export class SinginPage implements OnInit {
       { name: 'Curacautín', value: 'curacautin' },  
       { name: 'Victoria', value: 'victoria' }
     ],
-    Rios: [
+    rios: [
       { name: 'Valdivia', value: 'valdivia' },
       { name: 'La Unión', value: 'la_union' },
       { name: 'Panguipulli', value: 'panguipulli' },
@@ -152,7 +152,7 @@ export class SinginPage implements OnInit {
       { name: 'Máfil', value: 'mafil' },            
       { name: 'Corral', value: 'corral' }
     ],
-    Lagos: [
+    lagos: [
       { name: 'Puerto Montt', value: 'puerto_montt' },
       { name: 'Osorno', value: 'osorno' },
       { name: 'Castro', value: 'castro' },
@@ -164,7 +164,7 @@ export class SinginPage implements OnInit {
       { name: 'Llanquihue', value: 'llanquihue' },
       { name: 'Frutillar', value: 'frutillar' }
     ],
-    Aysen: [
+    aysen: [
       { name: 'Coyhaique', value: 'coyhaique' },
       { name: 'Puerto Aysén', value: 'puerto_aysen' },
       { name: 'Chile Chico', value: 'chile_chico' },
@@ -176,7 +176,7 @@ export class SinginPage implements OnInit {
       { name: 'O’Higgins', value: 'ohiggins' },           
       { name: 'Tortel', value: 'tortel' }
     ],
-    Magallanes: [
+    magallanes: [
       { name: 'Punta Arenas', value: 'punta_arenas' },
       { name: 'Puerto Natales', value: 'puerto_natales' },
       { name: 'Porvenir', value: 'porvenir' },
@@ -315,34 +315,30 @@ export class SinginPage implements OnInit {
    * Procesar registro de usuario
    */
   async onRegister() {
-    if (this.registerForm.valid) {
-      this.isLoading = true;
+  if (this.registerForm.valid) {
+    this.isLoading = true;
+    const formData = this.registerForm.value;
 
-      try {
-        const formData = this.registerForm.value;
-        
-        // Registrar usuario usando el servicio de autenticación
-        const success = await this.authService.register(formData);
-        
-        if (success) {
-          await this.showSuccessAlert();
-          // Redirigir al chat después del registro exitoso
-          this.router.navigate(['/chat'], { replaceUrl: true });
-        } else {
-          await this.showErrorAlert('Error al crear la cuenta. Inténtelo nuevamente.');
-        }
-      } catch (error) {
-        console.error('Error en registro:', error);
-        await this.showErrorAlert('Ocurrió un error inesperado. Inténtelo nuevamente.');
-      } finally {
+    this.authService.register(formData).subscribe({
+      next: async (response) => {
+        console.log('✅ Respuesta del servidor:', response);
+        await this.showSuccessAlert();
+        this.router.navigate(['/chat'], { replaceUrl: true });
+      },
+      error: async (err) => {
+        console.error('❌ Error al registrar:', err);
+        await this.showErrorAlert('Error al registrar usuario.');
+      },
+      complete: () => {
         this.isLoading = false;
       }
-    } else {
-      // Marcar todos los campos como touched para mostrar errores
-      this.markFormGroupTouched(this.registerForm);
-      await this.showErrorAlert('Por favor, complete todos los campos correctamente.');
-    }
+    });
+  } else {
+    this.markFormGroupTouched(this.registerForm);
+    await this.showErrorAlert('Por favor, complete todos los campos correctamente.');
   }
+}
+
 
   /**
    * Marcar todos los campos del formulario como touched

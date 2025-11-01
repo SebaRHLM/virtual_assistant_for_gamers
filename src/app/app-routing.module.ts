@@ -30,7 +30,8 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-  },  {
+  },
+  {
     path: 'tyc',
     loadChildren: () => import('./pages/tyc/tyc.module').then( m => m.TycPageModule)
   },

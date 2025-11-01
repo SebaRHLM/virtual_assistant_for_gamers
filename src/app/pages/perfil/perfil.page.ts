@@ -28,8 +28,13 @@ export class PerfilPage implements OnInit {
       return;
     }
 
-    // Obtener usuario actual
-    this.currentUser = this.authService.getCurrentUser();
+  // Escuchar los cambios en el usuario actual
+  this.authService.currentUser$.subscribe(user => {
+    this.currentUser = user;
+    console.log('👤 Usuario recibido en perfil:', user);
+  });
+
+
     
     // Cargar preferencia de tema
     this.loadThemePreference();

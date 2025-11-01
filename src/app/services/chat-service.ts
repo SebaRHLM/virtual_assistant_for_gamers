@@ -160,9 +160,6 @@ export class ChatService {
    * RF-ADM-02: Obtener todas las conversaciones (solo admin)
    */
   getAllChats(): Chat[] {
-    if (!this.authService.isAdmin()) {
-      return [];
-    }
     return this.chatsSubject.value;
   }
 

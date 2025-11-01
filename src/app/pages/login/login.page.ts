@@ -66,43 +66,52 @@ export class LoginPage implements OnInit {
   /**
    * Procesar inicio de sesión
    */
-  async onLogin() {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
+async onLogin() {
+  if (this.loginForm.valid) {
+    this.isLoading = true;
+    const credentials = this.loginForm.value;
 
-      try {
-        const credentials = this.loginForm.value;
-        
-        // Intentar login usando el servicio de autenticación
-        const success = await this.authService.login(credentials.email, credentials.password);
-        
-        if (success) {
-          // Redirigir al chat después del login exitoso
-          this.router.navigate(['/chat'], { replaceUrl: true });
-        } else {
+    try {
+      // Usamos subscribe en lugar de await
+      this.authService.login(credentials).subscribe({
+        next: async (response) => {
+          console.log('🟢 Respuesta del backend:', response);
+
+          // Verificar si la respuesta indica éxito
+          if (response.success) {
+            await this.router.navigate(['/chat'], { replaceUrl: true });
+          } else {
+            await this.showErrorAlert(
+              'Credenciales incorrectas',
+              'El email o la contraseña no son correctos.'
+            );
+          }
+        },
+        error: async (error) => {
+          console.error('❌ Error en login:', error);
           await this.showErrorAlert(
-            'Credenciales incorrectas', 
-            'El email o la contraseña no son correctos. Si no tienes cuenta, regístrate primero.'
+            'Error de conexión',
+            'Ocurrió un error al intentar iniciar sesión. Inténtelo nuevamente.'
           );
+        },
+        complete: () => {
+          this.isLoading = false;
         }
-      } catch (error) {
-        console.error('Error en login:', error);
-        await this.showErrorAlert(
-          'Error de conexión',
-          'Ocurrió un error inesperado. Inténtelo nuevamente.'
-        );
-      } finally {
-        this.isLoading = false;
-      }
-    } else {
-      // Marcar campos como touched para mostrar errores
-      this.markFormGroupTouched(this.loginForm);
-      await this.showErrorAlert(
-        'Datos incompletos',
-        'Por favor, complete todos los campos correctamente.'
-      );
+      });
+    } catch (error) {
+      console.error('❌ Excepción inesperada:', error);
+      this.isLoading = false;
+      await this.showErrorAlert('Error inesperado', 'Inténtelo nuevamente.');
     }
+  } else {
+    this.markFormGroupTouched(this.loginForm);
+    await this.showErrorAlert(
+      'Datos incompletos',
+      'Por favor, complete todos los campos correctamente.'
+    );
   }
+}
+
 
   /**
    * Marcar todos los campos como touched

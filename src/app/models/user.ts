@@ -5,10 +5,10 @@ export interface User {
   region: string;
   comuna: string;
   email: string;
-  password: string; // En producción debería estar hasheado
+  password?: string;  
   role: 'admin' | 'user';
-  createdAt: Date;
-  isActive: boolean;
+  createdAt?: Date;      
+  isActive?: boolean;      
 }
 
 export interface UserRegistrationData {
