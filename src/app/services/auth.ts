@@ -24,26 +24,12 @@ export class AuthService {
 register(userData: any): Observable<any> {
   return this.http.post(`${this.apiUrl}/register`, userData).pipe(
     tap((response: any) => {
-      // Si viene el success = true y data (distinto de nada) desde el backend, guardar el usuario
-      if (response && response.success && response.data) {
-        const backendUser = response.data;
-
-        // Mapeo de campos del backend al modelo del frontend
-        const user: User = {
-          id: backendUser.id_usuario,
-          username: backendUser.username,
-          rut: backendUser.rut || '',
-          region: backendUser.region || '',
-          comuna: backendUser.comuna || '',
-          email: backendUser.email,
-          role: backendUser.rol
-        };
-
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        console.log(' Usuario registrado y guardado:', user);
+      if (response && response.success) {
+        console.log('✅ Usuario registrado correctamente:', response.data);
+        // ❌ No guardamos usuario ni token aquí
+        // El usuario deberá iniciar sesión manualmente
       } else {
-        console.warn('Respuesta de registro no válida:', response);
+        console.warn('⚠️ Respuesta de registro no válida:', response);
       }
     })
   );
