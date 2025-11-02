@@ -10,6 +10,7 @@ Este proyecto incluye un **frontend en Ionic** y un **backend en Node.js con Exp
 Asegúrate de tener instalados:
 
 - [Node.js](https://nodejs.org/) (v14 o superior)
+- [pgAdmin4](https://www.postgresql.org) (v17)
 - [Ionic CLI](https://ionicframework.com/docs/cli) (v7+):  
 ```bash
   npm install -g @ionic/cli
@@ -50,9 +51,19 @@ cd frontend
 npm install
 ionic serve
 ```
+# ▶️ 3. Iniciar el Postgres (pgAdmin4)
+```bash
+  /virtual_assistant_for_gamers
+│
+├── backend/ 
+│   ├── config
+    │   └──db.js
+```
+- En db.js en la linea 6 dice Sequelize(Nombre de la BD, Usuario postgres, Contraseña),
+,edita los campos del parentesis segun tu pgAdmin4 (por defecto esta la bd "zeroai", el usuario "postgres" y sin contraseña).
+
 # 🔗 Comunicación entre frontend y backend
   - El frontend hace peticiones HTTP a la API REST del backend.
-
   - Ejemplo de uso:
 
       - POST /api/users/login → retorna JWT
