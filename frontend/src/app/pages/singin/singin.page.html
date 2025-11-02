@@ -1,0 +1,211 @@
+<ion-content class="register-content">
+  <div class="register-container">
+    <!-- Left Side - Branding -->
+    <div class="branding-section">
+      <div class="branding-content">
+        <h1 class="welcome-title">Bienvenido a ZERO.AI</h1>
+        <p class="welcome-subtitle">Tu pc perfecta a una pregunta de distancia</p>
+        <div class="logo-large">ZERO.AI</div>
+      </div>
+    </div>
+
+    <!-- Right Side - Register Form -->
+    <div class="form-section">
+      <div class="form-container">
+        <!-- Header with back button -->
+        <div class="form-header">
+          <ion-button fill="clear" color="black" (click)="goBack()">
+            <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+          </ion-button>
+          <h2 class="form-title">Crear nueva cuenta</h2>
+        </div>
+
+        <!-- Register Form -->
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+          
+          <!-- Nombre de usuario -->
+          <div class="form-group">
+            <label class="form-label">Ingrese su nombre de usuario:</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="username"
+                placeholder="Ejemplo"
+                type="text"
+                clearInput="true">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+              El nombre de usuario es requerido
+            </div>
+          </div>
+
+          <!-- RUT -->
+          <div class="form-group">
+            <label class="form-label">Rut:</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="rut"
+                placeholder="11.111.111-1"
+                type="text"
+                clearInput="true">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('rut')?.invalid && registerForm.get('rut')?.touched">
+              El RUT es requerido
+            </div>
+          </div>
+
+          <!-- Región -->
+          <div class="form-group">
+            <label class="form-label">Región:</label>
+            <ion-item class="form-item">
+              <ion-select
+                formControlName="region"
+                placeholder="Selecciona una región"
+                interface="popover">
+                <ion-select-option value="arica">Arica y Parinacota</ion-select-option>
+                <ion-select-option value="tarapaca">Tarapacá</ion-select-option>
+                <ion-select-option value="antofagasta">Antofagasta</ion-select-option>
+                <ion-select-option value="atacama">Atacama</ion-select-option>
+                <ion-select-option value="coquimbo">Coquimbo</ion-select-option>
+                <ion-select-option value="valparaiso">Valparaíso</ion-select-option>
+                <ion-select-option value="metropolitana">Metropolitana</ion-select-option>
+                <ion-select-option value="ohiggins">O'Higgins</ion-select-option>
+                <ion-select-option value="maule">Maule</ion-select-option>
+                <ion-select-option value="nuble">Ñuble</ion-select-option>
+                <ion-select-option value="biobio">Biobío</ion-select-option>
+                <ion-select-option value="araucania">Araucanía</ion-select-option>
+                <ion-select-option value="rios">Los Ríos</ion-select-option>
+                <ion-select-option value="lagos">Los Lagos</ion-select-option>
+                <ion-select-option value="aysen">Aysén</ion-select-option>
+                <ion-select-option value="magallanes">Magallanes</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('region')?.invalid && registerForm.get('region')?.touched">
+              La región es requerida
+            </div>
+          </div>
+
+          <!-- Comuna -->
+          <div class="form-group">
+            <label class="form-label">Comuna:</label>
+            <ion-item class="form-item">
+              <ion-select
+                formControlName="comuna"
+                placeholder="Selecciona una comuna"
+                interface="popover"
+                [disabled]="!registerForm.get('region')?.value">
+                <ion-select-option 
+                  *ngFor="let comuna of getAvailableComunas()" 
+                  [value]="comuna.value">
+                  {{ comuna.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('comuna')?.invalid && registerForm.get('comuna')?.touched">
+              La comuna es requerida
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label">Ingrese su E-mail:</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="email"
+                placeholder="Ejemplo@mail.com"
+                type="email"
+                clearInput="true">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              <span *ngIf="registerForm.get('email')?.errors?.['required']">El email es requerido</span>
+              <span *ngIf="registerForm.get('email')?.errors?.['email']">Ingrese un email válido</span>
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-group">
+            <label class="form-label">Contraseña:</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="password"
+                placeholder="Ejemplo123"
+                [type]="showPassword ? 'text' : 'password'"
+                clearInput="true">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end" 
+                (click)="togglePassword()">
+                <ion-icon 
+                  [name]="showPassword ? 'eye-off' : 'eye'" 
+                  slot="icon-only">
+                </ion-icon>
+              </ion-button>
+            </ion-item>
+            <div class="password-hint">* Mínimo 8 caracteres, números y letras</div>
+            <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              <span *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es requerida</span>
+              <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Mínimo 8 caracteres</span>
+              <span *ngIf="registerForm.get('password')?.errors?.['pattern']">Debe contener números y letras</span>
+            </div>
+          </div>
+
+          <!-- Confirmar Contraseña -->
+          <div class="form-group">
+            <label class="form-label">Confirme contraseña:</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="confirmPassword"
+                placeholder="Ejemplo123"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                clearInput="true">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end" 
+                (click)="toggleConfirmPassword()">
+                <ion-icon 
+                  [name]="showConfirmPassword ? 'eye-off' : 'eye'" 
+                  slot="icon-only">
+                </ion-icon>
+              </ion-button>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+              <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirme la contraseña</span>
+              <span *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">Las contraseñas no coinciden</span>
+            </div>
+          </div>
+
+          <!-- Términos y Condiciones -->
+          <div class="form-group">
+            <ion-item class="checkbox-item">
+              <ion-checkbox
+                formControlName="acceptTerms"
+                slot="start">
+              </ion-checkbox>
+              <ion-label class="terms-label">
+                Acepto los <a (click)="goTotyc()" class="terms-link">Términos y Condiciones</a> para el utilizar ZERO.AI<a href="#" class="terms-link"></a>
+              </ion-label>
+            </ion-item>
+            <div class="error-message" *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched">
+              Debe aceptar los términos y condiciones
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <ion-button
+            expand="block"
+            type="submit"
+            class="submit-button"
+            [disabled]="registerForm.invalid || isLoading">
+            <ion-spinner name="circular" *ngIf="isLoading"></ion-spinner>
+            {{ isLoading ? 'Creando cuenta...' : 'Sign Up' }}
+          </ion-button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

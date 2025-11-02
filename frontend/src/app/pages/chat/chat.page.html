@@ -1,0 +1,204 @@
+<div class="chat-container">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.sidebar-open]="sidebarOpen">
+    <!-- Header -->
+    <div class="sidebar-header">
+      <h1 class="sidebar-logo">ZERO.AI</h1>
+      <ion-button 
+        fill="clear" 
+        color="light" 
+        class="sidebar-toggle"
+        (click)="toggleSidebar()">
+        <ion-icon name="chevron-back" [class.rotated]="sidebarOpen"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- New Chat Button -->
+    <div class="new-chat-section">
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="white" 
+        class="new-chat-button"
+        (click)="createNewChat()">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Nuevo Chat
+      </ion-button>
+    </div>
+
+    <!-- Chat History -->
+    <div class="chat-history">
+      <div class="history-header">
+        <span class="history-title">Chats</span>
+      </div>
+      
+      <div class="chat-list">
+        <div 
+          *ngFor="let chatSummary of chatHistory" 
+          class="chat-item"
+          [class.active]="chatSummary.id === currentChatId"
+          (click)="selectChat(chatSummary.id)">
+          
+          <div class="chat-item-content">
+            <h4 class="chat-title">{{ chatSummary.title }}</h4>
+            <p class="chat-preview">{{ chatSummary.lastMessage }}</p>
+          </div>
+          
+          <ion-button 
+            fill="clear" 
+            color="medium" 
+            size="small"
+            class="chat-menu-button"
+            (click)="showChatOptions($event, chatSummary.id)">
+            <ion-icon name="ellipsis-horizontal" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Profile Button -->
+    <div class="user-profile-section">
+      <ion-button 
+        expand="block" 
+        fill="solid" 
+        color="primary" 
+        class="profile-button"
+        (click)="goToProfile()">
+        <ion-icon name="person" slot="start"></ion-icon>
+        {{ currentUser?.username || 'Nombre Usuario' }}
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div class="main-chat" [class.sidebar-open]="sidebarOpen">
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <ion-button 
+        fill="clear" 
+        color="dark"
+        (click)="toggleSidebar()">
+        <ion-icon name="menu" slot="icon-only"></ion-icon>
+      </ion-button>
+      <h1 class="mobile-logo">ZERO.AI</h1>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- Chat Header (Desktop) -->
+    <div class="chat-header" *ngIf="currentChat">
+      <h2 class="chat-title">{{ currentChat.title }}</h2>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="messages-container" #messagesContainer>
+      
+      <!-- Welcome Message (when no chat selected) -->
+      <div class="welcome-message" *ngIf="!currentChat">
+        <h2 class="welcome-title">¿En que build estás pensando?</h2>
+        <p class="welcome-subtitle">Pregunta a ZERO sobre compatibilidad y comparaciones de componentes</p>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-list" *ngIf="currentChat">
+        <div 
+          *ngFor="let message of currentChat.messages; trackBy: trackMessage"
+          class="message"
+          [class.message-user]="message.sender === 'user'"
+          [class.message-assistant]="message.sender === 'assistant'">
+          
+          <!-- User Message -->
+          <div *ngIf="message.sender === 'user'" class="message-content user-message">
+            <div class="message-bubble">
+              {{ message.content }}
+            </div>
+            <div class="message-time">
+              {{ message.timestamp | date: 'HH:mm' }}
+            </div>
+          </div>
+
+          <!-- Assistant Message -->
+          <div *ngIf="message.sender === 'assistant'" class="message-content assistant-message">
+            <div class="assistant-avatar">
+              <span class="avatar-text">Z</span>
+            </div>
+            <div class="assistant-response">
+              <div class="message-bubble" [innerHTML]="formatAssistantMessage(message.content)">
+              </div>
+              <div class="message-actions" *ngIf="hasProductUrl(message)">
+                <ion-button 
+                  fill="outline" 
+                  size="small" 
+                  color="primary"
+                  (click)="openProductLink(getProductUrl(message))">
+                  <ion-icon name="link" slot="start"></ion-icon>
+                  Ver producto
+                </ion-button>
+              </div>
+              <div class="message-time">
+                {{ message.timestamp | date: 'HH:mm' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="message message-assistant" *ngIf="isTyping">
+          <div class="message-content assistant-message">
+            <div class="assistant-avatar">
+              <span class="avatar-text">Z</span>
+            </div>
+            <div class="assistant-response">
+              <div class="message-bubble typing-indicator">
+                <div class="typing-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+      <div class="input-container">
+        <ion-item class="message-input">
+          <ion-textarea
+            #messageInput
+            [(ngModel)]="messageText"
+            placeholder="Pregúntale a ZERO :D"
+            [autoGrow]="true"
+            [rows]="1"
+            [maxlength]="1000"
+            (keydown)="onEnterKey($event)"
+            [disabled]="isTyping">
+          </ion-textarea>
+          
+          <ion-button 
+            fill="clear" 
+            slot="end"
+            [disabled]="!messageText.trim() || isTyping"
+            (click)="sendMessage()">
+            <ion-icon 
+              name="send" 
+              [color]="messageText.trim() && !isTyping ? 'primary' : 'medium'"
+              slot="icon-only">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
+        
+        <div class="input-hint">
+          Ejemplos: "¿Es compatible RTX 4070 con B550?", "Diferencia entre RTX 4060 y RTX 4070?"
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop for mobile -->
+<div class="sidebar-backdrop" 
+     [class.backdrop-visible]="sidebarOpen" 
+     (click)="closeSidebar()">
+</div>

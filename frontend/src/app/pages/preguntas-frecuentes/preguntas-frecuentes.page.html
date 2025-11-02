@@ -1,0 +1,81 @@
+<!-- faq.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Preguntas Frecuentes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="faq-content">
+  <!-- Banner de búsqueda -->
+  <div class="search-section">
+    <ion-searchbar 
+      [(ngModel)]="searchTerm" 
+      placeholder="Buscar en preguntas frecuentes..."
+      animated="true"
+      class="custom-searchbar">
+    </ion-searchbar>
+  </div>
+
+  <!-- Categorías de FAQ -->
+  <div class="faq-container">
+    <div *ngFor="let category of filteredCategories; let categoryIndex = index" 
+         class="category-section">
+      
+      <!-- Encabezado de categoría -->
+      <div class="category-header">
+        <ion-icon [name]="category.icon" class="category-icon"></ion-icon>
+        <h2 class="category-title">{{ category.name }}</h2>
+      </div>
+
+      <!-- Preguntas de la categoría -->
+      <div class="questions-list">
+        <div *ngFor="let item of category.questions; let questionIndex = index" 
+             class="question-item">
+          
+          <!-- Pregunta -->
+          <div class="question-header" 
+               (click)="toggleQuestion(categoryIndex, questionIndex)"
+               [class.expanded]="item.expanded">
+            <span class="question-text">{{ item.question }}</span>
+            <ion-icon 
+              [name]="item.expanded ? 'chevron-up' : 'chevron-down'" 
+              class="toggle-icon">
+            </ion-icon>
+          </div>
+
+          <!-- Respuesta -->
+          <div class="answer-content" 
+               [class.show]="item.expanded">
+            <p>{{ item.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <div *ngIf="filteredCategories.length === 0" class="no-results">
+      <ion-icon name="search-outline" class="no-results-icon"></ion-icon>
+      <h3>No se encontraron resultados</h3>
+      <p>Intenta con otros términos de búsqueda</p>
+    </div>
+  </div>
+
+  <!-- Sección de ayuda adicional -->
+  <div class="help-section">
+    <ion-card class="help-card">
+      <ion-card-header>
+        <ion-card-title>¿No encontraste tu respuesta?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Nuestro asistente virtual está disponible 24/7 para ayudarte con consultas específicas sobre compatibilidad y comparación de componentes.</p>
+        <ion-button expand="block" routerLink="/assistant" class="assistant-button">
+          <ion-icon name="chatbubble-ellipses" slot="start"></ion-icon>
+          Hablar con el Asistente
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

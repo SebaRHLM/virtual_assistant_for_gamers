@@ -1,0 +1,105 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    <!-- Left Side - Branding -->
+    <div class="branding-section">
+      <div class="branding-content">
+        <h1 class="welcome-title">Bienvenido a ZERO.AI</h1>
+        <p class="welcome-subtitle">Tu pc perfecta a una pregunta de distancia</p>
+        <div class="logo-large">ZERO.AI</div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="form-section">
+      <div class="form-container">
+        <div class="form-header">
+          <ion-button fill="clear" color="black" (click)="goBack()">
+            <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+
+        <h2 class="form-title">¡Bienvenido!</h2>
+        <p class="form-subtitle">Comencemos con tu build perfecta!</p>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+          
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="email"
+                placeholder="Ejemplo@mail.com"
+                type="email"
+                clearInput="true">
+              </ion-input>
+            </ion-item>
+            <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+              <span *ngIf="loginForm.get('email')?.errors?.['required']">El email es requerido</span>
+              <span *ngIf="loginForm.get('email')?.errors?.['email']">Ingrese un email válido</span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <ion-item class="form-item">
+              <ion-input
+                formControlName="password"
+                placeholder="Ejemplo123"
+                [type]="showPassword ? 'text' : 'password'"
+                clearInput="true">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end" 
+                (click)="togglePassword()">
+                <ion-icon 
+                  [name]="showPassword ? 'eye-off' : 'eye'" 
+                  slot="icon-only">
+                </ion-icon>
+              </ion-button>
+            </ion-item>
+            <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              La contraseña es requerida
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <ion-button
+            expand="block"
+            type="submit"
+            class="submit-button"
+            [disabled]="loginForm.invalid || isLoading">
+            <ion-spinner name="circular" *ngIf="isLoading"></ion-spinner>
+            {{ isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+          </ion-button>
+
+        </form>
+
+        <!-- Register Link -->
+        <div class="register-section">
+          <p class="register-text">
+            ¿No tienes una cuenta? 
+            <a class="register-link" (click)="goToRegister()">Regístrate</a>
+          </p>
+        </div>
+
+        <!-- Demo Info -->
+        <div class="demo-info">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Información de Demo</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Para acceder, primero regístrate con cualquier datos válidos.</p>
+              <p>Luego podrás iniciar sesión con esos mismos datos.</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>
