@@ -1,5 +1,5 @@
 [readme.txt](https://github.com/user-attachments/files/22585933/readme.txt)
-# Hecho por:
+# Prueba de nuevo Readme para EP-2
 - Claudio Troncoso
 - Sebastián Espinoza
 # Asistente virtual de sito gamer
