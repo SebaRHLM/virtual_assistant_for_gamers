@@ -1,7 +1,0 @@
-{
-  "name": "vrassitant",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

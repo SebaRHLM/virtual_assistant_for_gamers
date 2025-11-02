@@ -17,6 +17,12 @@ log.txt
 /.versions
 /coverage
 
+# Angular build y cache
+.angular
+dist
+out-tsc
+tmp
+
 # Ionic
 /.ionic
 /www
