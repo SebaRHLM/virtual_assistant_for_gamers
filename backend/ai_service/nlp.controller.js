@@ -32,7 +32,7 @@ export class NLPController {
 
       // Guardar respuesta de la IA
       const aiMessage = await MensajeRepository.create({
-        id_asistente: 1, // ID del asistente por defecto
+        id_asistente: 1, // ID del asistente por defecto zeroAI
         contenido: respuesta,
         tipo_consulta: "general",
         es_de_usuario: false,

@@ -14,9 +14,9 @@ let model = null;
 export class NLPService {
   static async initialize() {
     if (!model) {
-      console.log("🧠 Cargando modelo Phi-3 Mini localmente...");
+      console.log("Cargando modelo Phi-3 Mini localmente...");
       model = await pipeline("text-generation", "microsoft/Phi-3-mini-4k-instruct");
-      console.log("✅ Modelo cargado correctamente");
+      console.log("Modelo cargado correctamente");
     }
   }
 
@@ -25,14 +25,14 @@ export class NLPService {
       await NLPService.initialize();
     }
 
-    console.log("🗣️ Prompt recibido:", prompt);
+    console.log("Prompt recibido:", prompt);
     const response = await model(prompt, {
       max_new_tokens: 200,
       temperature: 0.7,
     });
 
     const text = response?.[0]?.generated_text || "No se pudo generar respuesta.";
-    console.log("🤖 Respuesta generada:", text);
+    console.log("Respuesta generada:", text);
     return text;
   }
 }

@@ -43,6 +43,11 @@ yarn-error.log
 # Environment files
 .env
 
+# === Servicio IA (Python) ===
+ai_service/venv/
+ai_service/__pycache__/
+__pycache__/
+
 # IDEs and editors
 .idea/
 .project

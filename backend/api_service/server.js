@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { sequelize } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
+import aiRoutes from "./routes/ai.routes.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/auth", authRoutes);
+app.use("/api/ai", aiRoutes);
 app.get("/", (req, res) => res.send("✅ Backend ZeroAI conectado"));
 
 (async () => {
