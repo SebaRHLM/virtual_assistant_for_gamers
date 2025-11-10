@@ -1,8 +1,8 @@
-import { Message } from "../models/mensaje";
+import { Mensaje } from "../models/mensaje.js";
 
 export const MessageRepository = {
   async crearMensajeUsuario({ id_usuario, contenido, intencion = null }) {
-    return await Message.create({
+    return await Mensaje.create({
       id_usuario,
       emisor: "user",
       contenido,
@@ -11,7 +11,7 @@ export const MessageRepository = {
   },
 
   async crearMensajeAI({ id_usuario, contenido, intencion = null }) {
-    return await Message.create({
+    return await Mensaje.create({
       id_usuario,
       emisor: "ai",
       contenido,
@@ -20,7 +20,7 @@ export const MessageRepository = {
   },
 
   async obtenerMensajesPorUsuario(id_usuario, limit = 20) {
-    return await Message.findAll({
+    return await Mensaje.findAll({
       where: { id_usuario },
       order: [["fecha_envio", "DESC"]],
       limit,

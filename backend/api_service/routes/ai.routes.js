@@ -1,7 +1,5 @@
-// routes/ai.routes.js
 import express from "express";
-import fetch from "node-fetch";
-import { verifyToken } from "../middlewares/auth.middleware.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 import { MessageRepository } from "../repositories/mensaje.js";
 
 const router = express.Router();

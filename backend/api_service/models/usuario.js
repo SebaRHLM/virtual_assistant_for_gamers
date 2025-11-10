@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
 // Formato de la tabla usuario del modelo relacional
-export const User = sequelize.define(
+export const Usuario = sequelize.define(
   "usuario",
   {
     id_usuario: {

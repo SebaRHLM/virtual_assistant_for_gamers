@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import cors from "cors";
 import { sequelize } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -22,8 +22,9 @@ app.get("/", (req, res) => res.send("✅ Backend ZeroAI conectado"));
     console.log("✅ Conectado a PostgreSQL con Sequelize");
 
     // Sincronizar tablas
-    //await sequelize.sync({ alter: true });
-    //console.log("🗃️ Tablas sincronizadas con PostgreSQL");
+    console.log("Iniciando sincronización con PostgreSQL");
+    await sequelize.sync({ alter: true });
+    console.log("🗃️ Tablas sincronizadas con PostgreSQL");
 
     // Iniciar servidor Express
     app.listen(process.env.PORT, () =>
