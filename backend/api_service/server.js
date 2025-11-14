@@ -13,24 +13,24 @@ app.use(express.json());
 // Rutas
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
-app.get("/", (req, res) => res.send("✅ Backend ZeroAI conectado"));
+app.get("/", (req, res) => res.send("Backend ZeroAI conectado"));
 
 (async () => {
   try {
     // Conectar BD
     await sequelize.authenticate();
-    console.log("✅ Conectado a PostgreSQL con Sequelize");
+    console.log("Conectado a PostgreSQL con Sequelize");
 
     // Sincronizar tablas
     console.log("Iniciando sincronización con PostgreSQL");
     await sequelize.sync({ alter: true });
-    console.log("🗃️ Tablas sincronizadas con PostgreSQL");
+    console.log("Tablas sincronizadas con PostgreSQL");
 
     // Iniciar servidor Express
     app.listen(process.env.PORT, () =>
-      console.log(`🚀 Servidor corriendo en http://localhost:${process.env.PORT}`)
+      console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`)
     );
   } catch (error) {
-    console.error("❌ Error al iniciar el servidor:", error);
+    console.error("Error al iniciar el servidor:", error);
   }
 })();

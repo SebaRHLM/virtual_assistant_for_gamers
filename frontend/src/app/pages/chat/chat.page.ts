@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
-  standalone : false
+  standalone: false
 })
 export class ChatPage implements OnInit, OnDestroy {
 
@@ -46,40 +46,37 @@ export class ChatPage implements OnInit, OnDestroy {
     // Obtener usuario actual
     this.currentUser = this.authService.getCurrentUser();
 
-    // Suscribirse a cambios en chats
-    const chatsSubscription = this.chatService.chats$.subscribe(chats => {
-      this.updateChatHistory();
+    // Suscribirse a los chats
+    const chatsSub = this.chatService.chats$.subscribe(chats => {
+      this.updateChatHistory(chats);
     });
-    this.subscriptions.push(chatsSubscription);
 
-    // Suscribirse a cambios en chat actual
-    const currentChatSubscription = this.chatService.currentChat$.subscribe(chat => {
+    // Suscribirse al chat actual
+    const currentSub = this.chatService.currentChat$.subscribe(chat => {
       this.currentChat = chat;
       this.currentChatId = chat?.id || null;
-      
-      // Auto-scroll al final cuando hay mensajes nuevos
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 100);
+      setTimeout(() => this.scrollToBottom(), 150);
     });
-    this.subscriptions.push(currentChatSubscription);
 
-    // Cargar historial de chats
-    this.updateChatHistory();
+    this.subscriptions.push(chatsSub, currentSub);
 
-    // En desktop, abrir sidebar por defecto
+    // Mostrar el sidebar abierto por defecto en pantallas grandes
     if (window.innerWidth >= 768) {
       this.sidebarOpen = true;
     }
+
+    // Cargar historial inicial
+    this.updateChatHistory(this.chatService.getUserChats());
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  /**
-   * RF-Usu-02: Abrir/cerrar barra lateral
-   */
+  // ==========================
+  // Sidebar
+  // ==========================
+
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
@@ -88,41 +85,48 @@ export class ChatPage implements OnInit, OnDestroy {
     this.sidebarOpen = false;
   }
 
-  /**
-   * RF-Usu-04: Crear nueva conversación
-   */
-  createNewChat() {
-    try {
-      const newChat = this.chatService.createNewChat();
-      this.updateChatHistory();
-      this.closeSidebarOnMobile();
-    } catch (error) {
-      console.error('Error creando nuevo chat:', error);
-      this.showErrorAlert('Error al crear nuevo chat');
+  private closeSidebarOnMobile() {
+    if (window.innerWidth < 768) {
+      this.sidebarOpen = false;
     }
   }
 
-  /**
-   * RF-Usu-03: Seleccionar chat de la barra lateral
-   */
+  // ==========================
+  // Chats
+  // ==========================
+
+  createNewChat() {
+    try {
+      const newChat = this.chatService.createNewChat();
+      this.updateChatHistory(this.chatService.getUserChats());
+      this.currentChat = newChat;
+      this.closeSidebarOnMobile();
+    } catch (error) {
+      console.error('Error creando nuevo chat:', error);
+      this.showErrorAlert('Error al crear un nuevo chat.');
+    }
+  }
+
   selectChat(chatId: string) {
     this.chatService.selectChat(chatId);
     this.closeSidebarOnMobile();
   }
 
-  /**
-   * RF-Usu-05, RF-Usu-06: Enviar mensaje al asistente
-   */
-  async sendMessage() {
-    if (!this.messageText.trim() || this.isTyping) {
-      return;
-    }
+  deleteChat(chatId: string) {
+    this.chatService.deleteChat(chatId);
+    this.updateChatHistory(this.chatService.getUserChats());
+  }
 
-    // Si no hay chat activo, crear uno nuevo
+  // ==========================
+  // Mensajes
+  // ==========================
+
+  async sendMessage() {
+    if (!this.messageText.trim() || this.isTyping) return;
+
     if (!this.currentChat) {
       this.createNewChat();
-      // Esperar un momento para que se cree el chat
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(r => setTimeout(r, 100));
     }
 
     const message = this.messageText.trim();
@@ -131,61 +135,39 @@ export class ChatPage implements OnInit, OnDestroy {
 
     try {
       await this.chatService.sendMessage(message);
-      this.updateChatHistory();
     } catch (error) {
       console.error('Error enviando mensaje:', error);
-      this.showErrorAlert('Error al enviar mensaje');
+      this.showErrorAlert('No se pudo enviar el mensaje.');
     } finally {
       this.isTyping = false;
-      // Enfocar input después de enviar
-      setTimeout(() => {
-        if (this.messageInput) {
-          this.messageInput.nativeElement.setFocus();
-        }
-      }, 100);
+      setTimeout(() => this.scrollToBottom(), 200);
     }
   }
 
-  /**
-   * Manejar tecla Enter en el input
-   */
-  onEnterKey(event: any) {
-    const keyboardEvent = event as KeyboardEvent;
-    if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
-      keyboardEvent.preventDefault();
+  onEnterKey(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
       this.sendMessage();
     }
   }
 
-  /**
-   * Formatear mensaje del asistente con HTML
-   */
   formatAssistantMessage(content: string): string {
-    // Detectar compatibilidad y aplicar estilos
     if (content.includes('✅') || content.includes('Sí son compatibles')) {
       content = content.replace(/✅.*?(?=\n|$)/g, '<span class="compatibility-result compatible">$&</span>');
     }
-    
+
     if (content.includes('❌') || content.includes('No son compatibles')) {
       content = content.replace(/❌.*?(?=\n|$)/g, '<span class="compatibility-result incompatible">$&</span>');
     }
 
-    // Convertir saltos de línea a <br>
     content = content.replace(/\n/g, '<br>');
-    
-    // Detectar títulos (líneas que terminan con :)
     content = content.replace(/^([^<\n]+:)(?=<br>|$)/gm, '<h4>$1</h4>');
-    
-    // Detectar listas con •
     content = content.replace(/• ([^<\n]+)/g, '<li>$1</li>');
     content = content.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
 
     return content;
   }
 
-  /**
-   * RF-Usu-08: Abrir enlace de producto
-   */
   openProductLink(url: string) {
     if (url && url.trim()) {
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -194,9 +176,10 @@ export class ChatPage implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Mostrar opciones del chat
-   */
+  // ==========================
+  // Perfil y opciones
+  // ==========================
+
   async showChatOptions(event: Event, chatId: string) {
     event.stopPropagation();
 
@@ -207,14 +190,12 @@ export class ChatPage implements OnInit, OnDestroy {
           text: 'Eliminar chat',
           role: 'destructive',
           icon: 'trash',
-          handler: () => {
-            this.confirmDeleteChat(chatId);
-          }
+          handler: () => this.confirmDeleteChat(chatId)
         },
         {
           text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel'
+          role: 'cancel',
+          icon: 'close'
         }
       ]
     });
@@ -222,97 +203,66 @@ export class ChatPage implements OnInit, OnDestroy {
     await actionSheet.present();
   }
 
-  /**
-   * Confirmar eliminación de chat
-   */
   async confirmDeleteChat(chatId: string) {
     const alert = await this.alertController.create({
       header: 'Eliminar chat',
       message: '¿Estás seguro que deseas eliminar este chat?',
       buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        },
+        { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Eliminar',
           role: 'destructive',
-          handler: () => {
-            this.chatService.deleteChat(chatId);
-            this.updateChatHistory();
-          }
+          handler: () => this.deleteChat(chatId)
         }
       ]
     });
-
     await alert.present();
   }
 
-  /**
-   * Ir al perfil
-   */
   goToProfile() {
     this.router.navigate(['/perfil']);
   }
 
-  /**
-   * Track function para ngFor de mensajes
-   */
-  trackMessage(index: number, message: Message): string {
-    return message.id;
-  }
+  // ==========================
+  // Utilidades
+  // ==========================
 
-  /**
-   * Verificar si el mensaje tiene URL de producto
-   */
-  hasProductUrl(message: Message): boolean {
-    return !!(message.metadata && message.metadata.productUrl && message.metadata.productUrl.trim().length > 0);
-  }
-
-  /**
-   * Obtener URL del producto de manera segura
-   */
-  getProductUrl(message: Message): string {
-    return message.metadata?.productUrl || '';
-  }
-
-  // Métodos privados
-
-  /**
-   * RF-Usu-03: Actualizar historial de chats
-   */
-  private updateChatHistory() {
-    this.chatHistory = this.chatService.getUserChats();
-  }
-
-  /**
-   * Scroll automático al final de los mensajes
-   */
   private scrollToBottom() {
     if (this.messagesContainer) {
-      const element = this.messagesContainer.nativeElement;
-      element.scrollTop = element.scrollHeight;
+      const el = this.messagesContainer.nativeElement;
+      el.scrollTop = el.scrollHeight;
     }
   }
 
-  /**
-   * Cerrar sidebar en mobile después de una acción
-   */
-  private closeSidebarOnMobile() {
-    if (window.innerWidth < 768) {
-      this.sidebarOpen = false;
-    }
+  private updateChatHistory(chats: Chat[]) {
+    this.chatHistory = chats.map(chat => ({
+      id: chat.id,
+      title: chat.title,
+      lastMessage: chat.messages[chat.messages.length - 1]?.content || 'Sin mensajes',
+      timestamp: chat.updatedAt || chat.createdAt || new Date(),
+      messageCount: chat.messages.length
+    }));
   }
 
-  /**
-   * Mostrar alerta de error
-   */
   private async showErrorAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',
-      message: message,
+      message,
       buttons: ['OK']
     });
     await alert.present();
   }
+
+  trackMessage(index: number, msg: Message) {
+    return msg.id;
+  }
+
+  hasProductUrl(message: Message): boolean {
+    return !!(message.metadata && message.metadata.productUrl);
+  }
+
+  getProductUrl(message: Message): string {
+    return message.metadata?.productUrl || '';
+  }
+
 }

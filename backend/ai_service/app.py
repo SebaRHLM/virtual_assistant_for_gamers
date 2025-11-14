@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+MODEL_ID = os.getenv("MODEL_ID")
 
 app = FastAPI(title="ZeroAI - Servicio de IA (TinyLlama)")
 

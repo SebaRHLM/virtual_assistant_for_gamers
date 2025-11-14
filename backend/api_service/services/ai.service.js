@@ -6,7 +6,6 @@ export class aiService {
       const { contenido } = req.body;
       const id_usuario = req.user.id_usuario;
 
-      console.log("🧠 Payload del token:", req.user);
 
       // Guardar mensaje del usuario
       const userMessage = await MessageRepository.crearMensajeUsuario({
