@@ -6,7 +6,6 @@ export class aiService {
       const { contenido } = req.body;
       const id_usuario = req.user.id_usuario;
 
-
       // Guardar mensaje del usuario
       const userMessage = await MessageRepository.crearMensajeUsuario({
         id_usuario,
@@ -15,8 +14,10 @@ export class aiService {
         es_de_usuario: true,
       });
 
-      // Llamar al servicio de IA
-      const respuesta = await fetch("http://127.0.0.1:8000/inference", {
+      // URL FIJA para Docker (el nombre del contenedor IA)
+      const IA_URL = "http://zeroai_ai:8000/inference";
+
+      const respuesta = await fetch(IA_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: contenido }),
@@ -28,7 +29,7 @@ export class aiService {
         throw new Error("Respuesta inválida del modelo de IA");
       }
 
-      // Guardar respuesta de la IA
+      // Guardar respuesta IA
       const aiMessage = await MessageRepository.crearMensajeAI({
         id_usuario,
         id_asistente: 1,
@@ -38,9 +39,10 @@ export class aiService {
       });
 
       return { userMessage, aiMessage };
+
     } catch (error) {
       console.error("Error comunicándose con el microservicio de IA:", error);
-      return "No se pudo obtener respuesta del modelo de IA.";
+      return { error: "No se pudo obtener respuesta del modelo de IA." };
     }
   }
 }

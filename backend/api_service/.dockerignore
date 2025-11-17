@@ -1,0 +1,17 @@
+# Ignorar archivos de entorno
+.env
+*.env
+.env.local
+.env.development
+
+# Ignorar dependencias
+node_modules
+
+# Ignorar archivos de Git
+.git
+.gitignore
+
+# Ignorar logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log

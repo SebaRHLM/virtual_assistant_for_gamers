@@ -6,69 +6,55 @@ import os
 from dotenv import load_dotenv
 
 # ============================================================
-# Cargar variables de entorno (.env)
+# Cargar .env
 # ============================================================
-load_dotenv()
+ENV_PATH = "/app/.env"
+if os.path.exists(ENV_PATH):
+    print(f" Cargando .env desde {ENV_PATH}")
+    load_dotenv(ENV_PATH)
 
-HF_TOKEN = os.getenv("HF_TOKEN")
 MODEL_ID = os.getenv("MODEL_ID")
 
-app = FastAPI(title="ZeroAI - Servicio de IA (TinyLlama)")
-
 # ============================================================
-# Estructura de los datos de entrada
-# ============================================================
-class PromptRequest(BaseModel):
-    prompt: str
-
-# ============================================================
-# Carga del modelo desde Hugging Face
+# Inicializar modelo
 # ============================================================
 print("Cargando modelo desde Hugging Face...")
 
-try:
-    pipe = pipeline(
-        "text-generation",
-        model=MODEL_ID,
-        token=HF_TOKEN,                     # Token de acceso
-        dtype=torch.float32,          # Compatible con CPU
-        device_map="auto"                   # Usa GPU si existe, CPU si no
-    )
-    print("✅ Modelo TinyLlama cargado correctamente.")
-except Exception as e:
-    print("❌ Error cargando el modelo:", e)
-    pipe = None
+pipe = pipeline(
+    "text-generation",
+    model=MODEL_ID,
+    tokenizer=MODEL_ID,
+    trust_remote_code=True,
+    torch_dtype=torch.float32,
+    device_map="auto"
+)
+
+print("✔ Modelo TinyLlama cargado correctamente.")
 
 # ============================================================
-# Endpoint principal de inferencia
+# FastAPI
 # ============================================================
+app = FastAPI(title="ZeroAI - IA TinyLlama")
+
+class PromptRequest(BaseModel):
+    prompt: str
+
 @app.post("/inference")
-async def inference(request: PromptRequest):
-    """
-    Recibe un prompt en formato JSON y devuelve una respuesta generada por el modelo.
-    """
-    if not pipe:
-        return {"error": "El modelo no se cargó correctamente."}
-
-    user_input = request.prompt.strip()
-    if not user_input:
-        return {"error": "Prompt vacío o inválido."}
-
+def inference(request: PromptRequest):
     try:
-        # 🔹 Estructurar conversación (usando el formato oficial de TinyLlama)
+        user_input = request.prompt.strip()
+
         messages = [
-            {"role": "system", "content": "Eres ZeroAI, un asistente amigable experto en hardware de PC."},
+            {"role": "system", "content": "Eres ZeroAI, un asistente experto en hardware de PC."},
             {"role": "user", "content": user_input}
         ]
 
-        # Aplicar plantilla de chat
         prompt = pipe.tokenizer.apply_chat_template(
             messages,
             tokenize=False,
             add_generation_prompt=True
         )
 
-        # 🔹 Generar respuesta
         outputs = pipe(
             prompt,
             max_new_tokens=200,
@@ -78,21 +64,14 @@ async def inference(request: PromptRequest):
             top_p=0.95
         )
 
-        response_text = outputs[0]["generated_text"]
-        print(f"🗨️ Prompt: {user_input}\n🤖 Respuesta: {response_text}")
+        full_text = outputs[0]["generated_text"]
+        generated = full_text[len(prompt):].strip()
 
-        # Extraer solo la parte generada después del prompt
-        generated_part = response_text[len(prompt):].strip()
-
-        return {"response": generated_part or "No se pudo generar una respuesta."}
+        return { "response": generated }
 
     except Exception as e:
-        print("❌ Error durante la inferencia:", e)
-        return {"error": str(e)}
+        return { "error": str(e) }
 
-# ============================================================
-# Arranque del servicio
-# ============================================================
 @app.get("/")
-async def root():
-    return {"message": " Servicio de IA ZeroAI activo y listo para procesar prompts."}
+def root():
+    return { "message": "ZeroAI está activo" }

@@ -16,7 +16,7 @@ export class ChatService {
   public chats$ = new BehaviorSubject<Chat[]>([]);
   public currentChat$ = new BehaviorSubject<Chat | null>(null);
 
-  private apiUrl = `${environment.apiUrl}/ai/chat`; // 👈 Asegúrate que apiUrl sea tu backend (ej: http://localhost:3000/api)
+  private apiUrl = `${environment.apiUrl}/ai/chat`;
 
   constructor(
     private http: HttpClient,
@@ -91,7 +91,6 @@ export class ChatService {
 
       const body = { contenido: content };
 
-      // 🔹 Llamada al backend Node.js → que luego llama a FastAPI
       const response: any = await this.http.post(this.apiUrl, body, { headers }).toPromise();
 
       if (response?.data?.aiMessage) {

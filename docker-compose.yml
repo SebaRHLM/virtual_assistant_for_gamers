@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: zeroai_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api_service
+    networks:
+      - zeroai_net
+
+  api_service:
+    build: ./backend/api_service
+    container_name: zeroai_api
+    environment:
+    - DB_HOST=postgres
+    - DB_USER=postgres
+    - DB_PASS=postgres
+    - DB_NAME=zeroai
+    - DB_PORT=5432
+    - AI_URL=http://ai_service:8000
+    - SECRET_JWT_KEY=ZeroAiSuperSecret2024
+    - COD_ROUNDS=10
+    - PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - ai_service
+    networks:
+      - zeroai_net
+
+  ai_service:
+    build: ./backend/ai_service
+    container_name: zeroai_ai
+    ports:
+      - "8000:8000"
+    networks:
+      - zeroai_net
+
+  postgres:
+    image: postgres:15
+    container_name: zeroai_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: zeroai
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - zeroai_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: zeroai_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@zeroai.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    networks:
+      - zeroai_net
+
+networks:
+  zeroai_net:
+
+volumes:
+  db_data:
